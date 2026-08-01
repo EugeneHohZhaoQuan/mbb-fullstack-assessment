@@ -1,0 +1,64 @@
+{
+  "info": {
+    "name": "Java Assessment - FavouritePlace API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" }
+  ],
+  "item": [
+    {
+      "name": "Create favourite (POST, triggers nested 3rd-party reverse-geocode call)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/favourites", "host": ["{{baseUrl}}"], "path": ["api", "favourites"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"placeId\": \"ChIJP3Sa8ziYEmsRUKgyFmh9AQM\",\n  \"name\": \"Sydney Opera House\",\n  \"address\": \"Bennelong Point, Sydney NSW\",\n  \"latitude\": -33.8568,\n  \"longitude\": 151.2153\n}"
+        }
+      }
+    },
+    {
+      "name": "Get favourite by id",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/api/favourites/1", "host": ["{{baseUrl}}"], "path": ["api", "favourites", "1"] }
+      }
+    },
+    {
+      "name": "List favourites (paginated, 10 per page)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/favourites?page=0&size=10",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "favourites"],
+          "query": [
+            { "key": "page", "value": "0" },
+            { "key": "size", "value": "10" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Update favourite",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/favourites/1", "host": ["{{baseUrl}}"], "path": ["api", "favourites", "1"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"placeId\": \"ChIJP3Sa8ziYEmsRUKgyFmh9AQM\",\n  \"name\": \"Sydney Opera House (updated)\",\n  \"address\": \"Bennelong Point\",\n  \"latitude\": -33.8568,\n  \"longitude\": 151.2153\n}"
+        }
+      }
+    },
+    {
+      "name": "Delete favourite",
+      "request": {
+        "method": "DELETE",
+        "url": { "raw": "{{baseUrl}}/api/favourites/1", "host": ["{{baseUrl}}"], "path": ["api", "favourites", "1"] }
+      }
+    }
+  ]
+}
