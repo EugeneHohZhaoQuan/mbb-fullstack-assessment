@@ -1,16 +1,18 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { favouritePlace } from './searchThunks';
+import { createSelector, createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { favouritePlace, fetchFavourites, unfavouritePlace } from './searchThunks';
 import type { RootState } from '../../app/store';
-import type { Place, SearchHistoryEntry } from '../../types/place';
+import type { FavouritePlaceResponse, Place, SearchHistoryEntry } from '../../types/place';
 
 interface SearchState {
   history: SearchHistoryEntry[];
   selectedId: string | null;
+  favourites: FavouritePlaceResponse[];
 }
 
 const initialState: SearchState = {
   history: [],
   selectedId: null,
+  favourites: [],
 };
 
 const searchSlice = createSlice({
@@ -49,10 +51,19 @@ const searchSlice = createSlice({
       .addCase(favouritePlace.fulfilled, (state, action) => {
         const entry = state.history.find((h) => h.id === action.meta.arg.id);
         if (entry) entry.favourite = { status: 'succeeded', error: null };
+        if (!state.favourites.some((f) => f.placeId === action.payload.placeId)) {
+          state.favourites.unshift(action.payload);
+        }
       })
       .addCase(favouritePlace.rejected, (state, action) => {
         const entry = state.history.find((h) => h.id === action.meta.arg.id);
         if (entry) entry.favourite = { status: 'failed', error: action.error.message ?? 'Unknown error' };
+      })
+      .addCase(fetchFavourites.fulfilled, (state, action) => {
+        state.favourites = action.payload;
+      })
+      .addCase(unfavouritePlace.fulfilled, (state, action) => {
+        state.favourites = state.favourites.filter((f) => f.id !== action.payload);
       });
   },
 });
@@ -62,5 +73,9 @@ export const { searchAdded, historyItemSelected } = searchSlice.actions;
 export const selectHistory = (state: RootState) => state.search.history;
 export const selectSelectedPlace = (state: RootState) =>
   state.search.history.find((h) => h.id === state.search.selectedId) ?? null;
+export const selectFavourites = (state: RootState) => state.search.favourites;
+export const selectFavouritePlaceIds = createSelector(selectFavourites, (favourites) =>
+  new Set(favourites.map((f) => f.placeId)),
+);
 
 export default searchSlice.reducer;

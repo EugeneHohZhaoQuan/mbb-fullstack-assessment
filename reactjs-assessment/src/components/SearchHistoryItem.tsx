@@ -10,12 +10,19 @@ const FAVOURITE_TITLE: Record<FavouriteStatus, string> = {
 interface SearchHistoryItemProps {
   entry: SearchHistoryEntry;
   isSelected: boolean;
+  isFavourited: boolean;
   onSelect: (id: string) => void;
   onFavourite: (id: string) => void;
 }
 
-export default function SearchHistoryItem({ entry, isSelected, onSelect, onFavourite }: SearchHistoryItemProps) {
-  const status = entry.favourite.status;
+export default function SearchHistoryItem({
+  entry,
+  isSelected,
+  isFavourited,
+  onSelect,
+  onFavourite,
+}: SearchHistoryItemProps) {
+  const status = isFavourited ? 'succeeded' : entry.favourite.status;
 
   return (
     <li className={`flex items-center gap-2 p-3 border-b last:border-b-0 ${isSelected ? 'bg-blue-50' : 'hover:bg-gray-50'}`}>
