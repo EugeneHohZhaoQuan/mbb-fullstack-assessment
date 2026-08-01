@@ -141,3 +141,28 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Node / React
+node_modules/
+dist/
+build/
+.env
+.env.local
+
+# Java / Maven / Gradle
+target/
+build/
+*.class
+*.jar
+.gradle/
+HELP.md
+
+# IDE
+.vscode/
+.idea/
+*.iml
+.DS_Store
+
+# Logs
+*.log
+logs/
