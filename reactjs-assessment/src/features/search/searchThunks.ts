@@ -1,15 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { searchAdded } from './searchSlice';
-import type { AppDispatch } from '../../app/store';
 import type {
   FavouritePlaceResponse,
-  Place,
   SearchHistoryEntry,
 } from '../../types/place';
-
-export const addSearch = (place: Place) => (dispatch: AppDispatch) => {
-  dispatch(searchAdded(place));
-};
 
 export const favouritePlace = createAsyncThunk<
   FavouritePlaceResponse,
