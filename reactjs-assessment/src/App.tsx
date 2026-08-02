@@ -6,13 +6,13 @@ import MapView from './components/MapView';
 import SearchHistoryList from './components/SearchHistoryList';
 import { useGoogleMapsLoader } from './hooks/useGoogleMapsLoader';
 import {
-  addSearch,
   favouritePlace,
   fetchFavourites,
   unfavouritePlace,
 } from './features/search/searchThunks';
 import {
   historyItemSelected,
+  searchAdded,
   selectFavourites,
   selectFavouritePlaceIds,
   selectHistory,
@@ -34,7 +34,7 @@ export default function App() {
 
   const handlePlaceSelected = useCallback(
     (place: Place) => {
-      dispatch(addSearch(place));
+      dispatch(searchAdded(place));
     },
     [dispatch],
   );
