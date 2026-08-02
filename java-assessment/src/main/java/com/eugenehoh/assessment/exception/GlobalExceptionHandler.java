@@ -1,5 +1,6 @@
 package com.eugenehoh.assessment.exception;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -21,6 +22,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DuplicatePlaceException.class)
     public ResponseEntity<Map<String, Object>> handleDuplicate(DuplicatePlaceException ex) {
         return build(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Map<String, Object>> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+        return build(HttpStatus.CONFLICT, "FavouritePlace already exists with that placeId");
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
