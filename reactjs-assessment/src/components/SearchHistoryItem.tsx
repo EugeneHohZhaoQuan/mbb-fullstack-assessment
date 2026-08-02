@@ -1,3 +1,4 @@
+import BookmarkIcon from './BookmarkIcon';
 import type { FavouriteStatus, SearchHistoryEntry } from '../types/place';
 
 const FAVOURITE_TITLE: Record<FavouriteStatus, string> = {
@@ -34,10 +35,10 @@ export default function SearchHistoryItem({
       <button
         onClick={() => onFavourite(entry.id)}
         disabled={status === 'loading' || status === 'succeeded'}
-        className="text-xl leading-none disabled:cursor-not-allowed disabled:opacity-60 shrink-0"
+        className="disabled:cursor-not-allowed disabled:opacity-60 shrink-0 text-slate-700"
         title={FAVOURITE_TITLE[status]}
       >
-        {status === 'succeeded' ? '⭐' : '☆'}
+        <BookmarkIcon filled={status === 'succeeded'} className="w-5 h-5" />
       </button>
     </li>
   );

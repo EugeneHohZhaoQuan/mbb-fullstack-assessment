@@ -1,3 +1,4 @@
+import BookmarkIcon from './BookmarkIcon';
 import type { FavouritePlaceResponse } from '../types/place';
 
 interface FavouritesListProps {
@@ -30,10 +31,10 @@ export default function FavouritesList({
           </div>
           <button
             onClick={() => onUnfavourite(entry.id)}
-            className="text-xl leading-none shrink-0"
+            className="shrink-0 text-slate-700"
             title="Remove from favourites"
           >
-            ⭐
+            <BookmarkIcon filled className="w-5 h-5" />
           </button>
         </li>
       ))}
