@@ -32,7 +32,7 @@ see each project's own README for details on running them together.
 | A Google Maps API key with Places API (New) + Maps JavaScript API enabled | React project                  |
 | JDK 17+                                                                   | Java project                   |
 | Maven (or the included `mvnw` wrapper)                                    | Java project                   |
-| SQL Server (local instance), database `TESTDB`                            | Java project                   |
+| Docker Desktop (Rosetta emulation enabled on Apple Silicon)               | Java project — runs MSSQL      |
 | Postman                                                                   | Testing/reviewing the Java API |
 
 Neither project ships with real credentials committed — see each sub-project's README for how
@@ -52,7 +52,8 @@ npm run dev
 
 # Backend (in a separate terminal)
 cd java-assessment
-# configure DB credentials — see java-assessment/README.md
+export MSSQL_SA_PASSWORD='YourStrong!Passw0rd'
+docker compose up -d          # starts MSSQL — see java-assessment/README.md for DB setup
 ./mvnw spring-boot:run
 ```
 
